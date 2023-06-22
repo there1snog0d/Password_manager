@@ -52,7 +52,10 @@ class New_tab():
 
         self.tab = ttk.Frame(nb)
         self.initialize_user_interface(c1, c2, c3, fname)
-        self.insert_data(fname)
+        try:
+            self.insert_data(fname)
+        except:
+            print('Error')
 
         try:
             f = open('Temp/pincode.txt', 'r')
@@ -90,19 +93,22 @@ class New_tab():
 
     def create_pincode(self):
         create_window = tk.Tk()
-        create_window.title("Придумайте пин-код")
+        create_window.title("Пин-код")
         screen_width = root.winfo_screenwidth()
         screen_height = root.winfo_screenheight()
 
         create_frame = tk.Frame(create_window)
         create_frame .pack(expand=True)
 
+        label = tk.Label(create_frame,text="Придумайте пин-код")
+        label.grid(row=0,column=1)
+
         pincode_entry = tk.Entry(create_frame)
-        pincode_entry.grid(row=0, column=1)
+        pincode_entry.grid(row=1, column=1)
 
         button1 = tk.Button(create_frame, text="Готово",
                             command=lambda: [self.commit_pincode(pincode_entry.get()), create_window.destroy() ])
-        button1.grid(row=1, column=1)
+        button1.grid(row=2, column=1)
 
         window_width = 250
         window_height = 250
@@ -110,6 +116,7 @@ class New_tab():
         y = (screen_height // 2) - (window_height // 2)
         create_window.geometry(f"{window_width}x{window_height}+{x}+{y}")
         create_window.resizable(width=False, height=False)
+        create_window.call('wm', 'attributes', '.', '-topmost', '1')
 
     def OnDoubleClick(self, fname):
 
@@ -151,7 +158,7 @@ class New_tab():
         self.list.delete(*self.list.get_children())
         with open(fname, newline="") as f:
             for contact in f:
-                contact = contact.split()[0] + ' ' + contact.split()[1] + ' ' + '*' * len(self.new_key.decrypt_func(contact.split()[2]))
+                contact = contact.split(' ')[0] + ' ' + contact.split(' ')[1] + ' ' + '*' * len(self.new_key.decrypt_func(contact.split(' ')[2]))
                 self.list.insert("", tk.END, values = contact)
 
     def add_func(self, fname):
@@ -227,7 +234,7 @@ class New_tab():
         selected_line = self.list.item(selection)['values']
         temp = ''
         for line in f:
-            if line.split()[0] == selected_line[0] and str(line.split()[1]) == str(selected_line[1]):
+            if line.split(' ')[0] == selected_line[0] and str(line.split(' ')[1]) == str(selected_line[1]):
                 temp = line
         f.close()
 
