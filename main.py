@@ -33,7 +33,7 @@ def delete_from_file(fname, dline):
     f = open(fname)
     temp = []
     for line in f:
-        if line.split()[0] != dline[0] and line.split()[1] != dline[1]:
+        if line.split(' ')[0] != dline[0] and line.split(' ')[1] != dline[1]:
             temp.append(line)
     f.close()
     f = open(fname, 'w')
@@ -250,7 +250,7 @@ class New_tab():
         label2.grid(row=0, column=0)
 
         login_entry = tk.Entry(show_frame)
-        login_entry.insert(0, temp.split()[1])
+        login_entry.insert(0, temp.split(' ')[1])
         login_entry.grid(row=0, column=1)
         login_entry['state'] = 'disabled'
 
@@ -266,7 +266,7 @@ class New_tab():
         label3.grid(row=1, column=0)
 
         password_entry = tk.Entry(show_frame)
-        password_entry.insert(0, self.new_key.decrypt_func(temp.split()[2]))
+        password_entry.insert(0, self.new_key.decrypt_func(temp.split(' ')[2]))
         password_entry.grid(row=1, column=1)
         password_entry['state'] = 'disabled'
 
