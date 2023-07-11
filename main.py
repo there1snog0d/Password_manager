@@ -52,10 +52,8 @@ class New_tab():
 
         self.tab = ttk.Frame(nb)
         self.initialize_user_interface(c1, c2, c3, fname)
-        try:
-            self.insert_data(fname)
-        except:
-            print('Error')
+
+        self.insert_data(fname)
 
         try:
             f = open('Temp/pincode.txt', 'r')
@@ -207,7 +205,7 @@ class New_tab():
     def generate_func(self, entery):
         chars = '_-*!&$#?=<>abcdefghijklnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
         password = ''
-        for i in range(10):
+        for i in range(12):
             password += random.choice(chars)
         entery.delete(0, tk.END)
         entery.insert(0, password)
